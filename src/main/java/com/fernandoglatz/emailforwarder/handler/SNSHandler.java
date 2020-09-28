@@ -150,6 +150,18 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 			newMimeMessage.addHeader(X_ORIGINAL_TO, InternetAddress.toString(emailTo));
 
 			if (StringUtils.isNotEmpty(from)) {
+				if (from.startsWith("@")) {
+					for (Address address : emailTo) {
+						InternetAddress inetAddress = (InternetAddress) address;
+						String addressStr = inetAddress.getAddress();
+						if (StringUtils.isNotEmpty(addressStr) && addressStr.toLowerCase().contains(from.toLowerCase())) {
+							from = addressStr.toLowerCase();
+							break;
+						}
+					}
+
+				}
+
 				if (StringUtils.containsNone(from, "<")) {
 					InternetAddress address = (InternetAddress) emailFrom[0];
 					String personal = address.getPersonal();
