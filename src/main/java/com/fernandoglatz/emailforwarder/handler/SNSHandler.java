@@ -57,6 +57,7 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 	private static final String CONTENT_IGNORE_MESSAGE = "content_ignore_message";
 	private static final String SEPARATOR = ";";
 
+	private static final String FORWARD = "forward";
 	private static final String REPLY_TO = "Reply-To";
 	private static final String X_ORIGINAL_TO = "X-Original-To";
 
@@ -159,7 +160,10 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 							break;
 						}
 					}
+				}
 
+				if (from.startsWith("@")) {
+					from = FORWARD + from;
 				}
 
 				if (StringUtils.containsNone(from, "<")) {
