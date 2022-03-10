@@ -27,7 +27,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Document.OutputSettings;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 /**
  * @author fernandoglatz
@@ -92,7 +92,7 @@ public class EmailUtils {
 		jsoupDoc.select("p").before("\\r\\n");
 
 		String newStr = jsoupDoc.html().replaceAll("\\\\r\\\\n", LINE_FEED);
-		return Jsoup.clean(newStr, StringUtils.EMPTY, Whitelist.none(), outputSettings);
+		return Jsoup.clean(newStr, StringUtils.EMPTY, Safelist.none(), outputSettings);
 	}
 
 	private static void getContentFromMultipart(Set<String> stringParts, Multipart multipart) throws IOException, MessagingException {

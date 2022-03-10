@@ -63,6 +63,9 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 
 	@Override
 	public String handleRequest(SNSEvent event, Context context) {
+		super.handleRequest(event, context);
+		String response = "Executed";
+
 		try {
 			List<SNSRecord> records = event.getRecords();
 			for (SNSRecord record : records) {
@@ -98,10 +101,10 @@ public class SNSHandler extends AbstractRequestHandler<SNSEvent, String> {
 			}
 		} catch (Exception e) {
 			logError(e);
-			return "Error on execution";
+			response = "Error on execution";
 		}
 
-		return "Executed";
+		return response;
 	}
 
 	private void processEmail(InputStream inputStream) throws MessagingException, IOException {

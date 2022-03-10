@@ -15,6 +15,9 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
  */
 public class AbstractRequestHandler<I, O> implements RequestHandler<I, O> {
 
+	private static final String INFO = "INFO: ";
+	private static final String ERROR = "ERROR: ";
+
 	private Context context;
 
 	@Override
@@ -32,16 +35,16 @@ public class AbstractRequestHandler<I, O> implements RequestHandler<I, O> {
 	}
 
 	public void logInfo(String message) {
-		log(System.out, message);
+		log(System.out, INFO + message);
 	}
 
 	public void logError(Exception e) {
 		String stacktrace = ExceptionUtils.getStackTrace(e);
-		log(System.err, stacktrace);
+		log(System.err, ERROR + stacktrace);
 	}
 
 	public void logError(String message) {
-		log(System.err, message);
+		log(System.err, ERROR + message);
 	}
 
 	private void log(PrintStream printStream, String message) {
